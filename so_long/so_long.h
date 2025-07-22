@@ -6,7 +6,7 @@
 /*   By: dvidal <dvidal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 14:39:01 by dvidal            #+#    #+#             */
-/*   Updated: 2025/07/10 15:24:43 by dvidal           ###   ########.fr       */
+/*   Updated: 2025/07/22 11:31:01 by dvidal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@
 #include "libft/libft.h"
 #include "printf/ft_printf.h"
 
-#define WIDTH 1500
-#define HEIGHT 1500
 #define SPRITE 64
 
 # ifndef BUFFER_SIZE
@@ -52,9 +50,12 @@ typedef struct s_xpm
     int moves;
     int height;
     int length;
-    int pcheck;
-    int echeck;
-    int ccheck;
+    int pck;
+    int eck;
+    int cck;
+    char *line;
+    int ey;
+    int ex;
 }   t_xpm;
 
 typedef struct s_data
@@ -65,12 +66,13 @@ typedef struct s_data
     t_xpm xpm;
     char    **map;
     char    **mapcheck;
+    char    last_tile;
     
 } t_data;
 
-void P_value(char **mapa, int *y, int *x, t_data *program);
-int colisioncheck(char **mapa, int x, int y, char key, t_data *program);
-int collectablecount(char **mapa, t_data *program);
+void p_value(char **mapa, int *y, int *x, t_data *program);
+int colisioncheck(int x, int y, char key, t_data *program);
+void collectablecount(char **mapa, t_data *program);
 void floodfill(char **mapa, int y, int x);
 void freemap(char **map, t_data *program);
 int floodfillcheck(char **mapa, t_data *program);
@@ -79,4 +81,17 @@ void keypx(int keyp, int y, int x, t_data *program);
 void exitconfirm(char **mapa, char key, int cc, t_data *program);
 int ft_close(t_data *program);
 int dimensioncheck(char **mapa, t_data *program);
+int	ft_filenamechecker(char *filename);
+int	ft_strcmp(char *s1, char *s2);
+int	render(t_data *program);
+int	keyp(int keyp, t_data *program);
+void    freemap(char **map, t_data *program);
+int	cfinder(char **mapa, t_data *program);
+int	initialize(char *line, t_data *ret);
+int	checkers(t_data *ret);
+int	mapcheck(char **mapa, t_data *program);
+void ft_init(t_data *program);
+int ft_windowsize(char **mapa, t_data *program);
+void ft_tilekeeper(int y, int x, t_data *program);
+void e_value(char **mapa, t_data *program);
 # endif
