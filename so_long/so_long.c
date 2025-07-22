@@ -6,24 +6,26 @@
 /*   By: dvidal <dvidal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 15:06:35 by dvidal            #+#    #+#             */
-/*   Updated: 2025/07/22 11:38:45 by dvidal           ###   ########.fr       */
+/*   Updated: 2025/07/22 14:42:34 by dvidal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
+void clearthesenuts(t_data *program, void *img)
+{
+	if (img != NULL)
+		mlx_destroy_image(program->mlx, img);
+}
 int	ft_close(t_data *program)
 {
-	if (program->xpm.player != NULL)
-		mlx_destroy_image(program->mlx, program->xpm.player);
-	if (program->xpm.wall != NULL)
-		mlx_destroy_image(program->mlx, program->xpm.wall);
-	if (program->xpm.floor != NULL)
-		mlx_destroy_image(program->mlx, program->xpm.floor);
-	if (program->xpm.exit != NULL)
-		mlx_destroy_image(program->mlx, program->xpm.exit);
-	if (program->xpm.collectable != NULL)
-		mlx_destroy_image(program->mlx, program->xpm.collectable);
+	clearthesenuts(program, program->xpm.issac.idle);
+	clearthesenuts(program, program->xpm.issac.right);
+	clearthesenuts(program, program->xpm.issac.left);
+	clearthesenuts(program, program->xpm.wall);
+	clearthesenuts(program, program->xpm.floor);
+	clearthesenuts(program, program->xpm.exit);
+	clearthesenuts(program, program->xpm.collectable);
 	if (program->window != NULL)
 		mlx_destroy_window(program->mlx, program->window);
 	if (program->mlx != NULL)
@@ -48,7 +50,7 @@ void	invalue(t_data *ret)
 	if ((ret->window = mlx_new_window(ret->mlx, ret->xpm.length * SPRITE, ret->xpm.height * SPRITE, "So_Long"))
 		== NULL)
 		ft_close(ret);
-	if ((ret->xpm.player = mlx_xpm_file_to_image(ret->mlx, "issac_1_64.xpm", &x, &y))
+	if ((ret->xpm.issac.idle = mlx_xpm_file_to_image(ret->mlx, "issac_1_64.xpm", &x, &y))
 		== NULL)
 		ft_close(ret);
 	if ((ret->xpm.wall = mlx_xpm_file_to_image(ret->mlx, "wall_64.xpm", &x, &y))
@@ -73,12 +75,12 @@ int	initialize(char *line, t_data *ret)
 	ret->xpm.height = 0;
 	if (line == NULL)
 		return (1);
+	ret->last_tile = '0';
 	ret->map = ft_split(line, '\n');
 	ret->mapcheck = ft_split(line, '\n');
 	if (checkers(ret) == 1)
 		return (1);
 	collectablecount(ret->map, ret);
-	e_value(ret->map, ret);
 	invalue(ret);
 	return (0);
 }

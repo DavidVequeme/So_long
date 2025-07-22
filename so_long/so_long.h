@@ -6,7 +6,7 @@
 /*   By: dvidal <dvidal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 14:39:01 by dvidal            #+#    #+#             */
-/*   Updated: 2025/07/22 11:31:01 by dvidal           ###   ########.fr       */
+/*   Updated: 2025/07/22 14:35:10 by dvidal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,13 @@
 #  define BUFFER_SIZE 5
 # endif
 
+typedef struct s_issac
+{
+    void *idle;
+    void *left;
+    void *right;
+}   t_issac;
+
 typedef struct s_img    
 {
     void *img;
@@ -39,7 +46,7 @@ typedef struct s_img
 
 typedef struct s_xpm
 {
-    void *player;
+    t_issac issac;
     void *exit;
     void *floor;
     void *wall;
@@ -54,8 +61,6 @@ typedef struct s_xpm
     int eck;
     int cck;
     char *line;
-    int ey;
-    int ex;
 }   t_xpm;
 
 typedef struct s_data
@@ -93,5 +98,4 @@ int	mapcheck(char **mapa, t_data *program);
 void ft_init(t_data *program);
 int ft_windowsize(char **mapa, t_data *program);
 void ft_tilekeeper(int y, int x, t_data *program);
-void e_value(char **mapa, t_data *program);
 # endif

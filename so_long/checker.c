@@ -6,7 +6,7 @@
 /*   By: dvidal <dvidal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 12:23:29 by dvidal            #+#    #+#             */
-/*   Updated: 2025/07/22 10:37:08 by dvidal           ###   ########.fr       */
+/*   Updated: 2025/07/22 14:25:03 by dvidal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,8 +104,6 @@ int	floodfillcheck(char **mapa, t_data *program)
 
 int	colisioncheck(int x, int y, char key, t_data *program)
 {
-	if (program->xpm.cc == 0)
-		program->map[2][1] = 'E';
 	if (key == 'W' && program->map[y - 1][x] == '1')
 		return (1);
 	else if (key == 'S' && program->map[y + 1][x] == '1')

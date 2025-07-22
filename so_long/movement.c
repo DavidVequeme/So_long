@@ -6,7 +6,7 @@
 /*   By: dvidal <dvidal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 12:44:37 by dvidal            #+#    #+#             */
-/*   Updated: 2025/07/22 11:06:29 by dvidal           ###   ########.fr       */
+/*   Updated: 2025/07/22 14:44:03 by dvidal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,8 @@ int	keyp(int keyp, t_data *program)
 	y = program->xpm.y;
 	if (keyp == XK_Escape)
 		ft_close(program);
-	program->last_tile = '0';
 	keypy(keyp, program->xpm.y, program->xpm.x, program);
 	keypx(keyp, y, x, program);
-	if (keyp == XK_Right)
-	{
-		mlx_destroy_image(program->mlx, program->xpm.player);
-		program->xpm.player = mlx_xpm_file_to_image(program->mlx,
-			 "issac_3_64.xpm", &x, &y);
-	}
-	if (keyp == XK_Left)
-	{
-		mlx_destroy_image(program->mlx, program->xpm.player);
-		program->xpm.player = mlx_xpm_file_to_image(program->mlx, 
-			"issac_2_64.xpm", &x, &y);
-	}
 	render(program);
 	return (0);
 }
@@ -63,10 +50,20 @@ void	keypy(int keyp, int y, int x, t_data *program)
 
 void ft_tilekeeper(int y, int x, t_data *program)
 {
-	program->last_tile = program->map[y][x];
+	if (program->map[y][x] == 'C')
+		program->xpm.cc--;
+	else
+	{
+		printf("Last tile %c\n", program->last_tile);
+		program->last_tile = program->map[y][x];
+		printf("Current tile %c\n", program->last_tile);
+	}
+
 	program->map[y][x] = 'P';
 	program->xpm.moves++;
 	ft_printf("moves:%i\n", program->xpm.moves);
+	for (int i = 0; program->map[i] != NULL; i++)
+		printf("%s\n", program->map[i]);
 }
 
 void	keypx(int keyp, int y, int x, t_data *program)
@@ -77,8 +74,8 @@ void	keypx(int keyp, int y, int x, t_data *program)
 		{
 			program->map[y][x] = program->last_tile;
 			ft_tilekeeper(y, x + 1, program);
-			mlx_destroy_image(program->mlx, program->xpm.player);
-			program->xpm.player = mlx_xpm_file_to_image(program->mlx, "issac_3_64.xpm", &x, &y);
+			mlx_destroy_image(program->mlx, program->xpm.issac.idle);
+			program->xpm.issac.idle = mlx_xpm_file_to_image(program->mlx, "issac_3_64.xpm", &x, &y);
 			program->xpm.x++;
 		}
 	}
@@ -88,6 +85,8 @@ void	keypx(int keyp, int y, int x, t_data *program)
 		{
 			program->map[y][x] = program->last_tile;
 			ft_tilekeeper(y, x - 1, program);
+			mlx_destroy_image(program->mlx, program->xpm.issac.idle);
+			program->xpm.issac.idle = mlx_xpm_file_to_image(program->mlx, "issac_2_64.xpm", &x, &y);
 			program->xpm.x--;
 		}
 	}
