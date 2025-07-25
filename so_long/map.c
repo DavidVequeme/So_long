@@ -6,7 +6,7 @@
 /*   By: dvidal <dvidal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 12:26:36 by dvidal            #+#    #+#             */
-/*   Updated: 2025/07/22 10:38:18 by dvidal           ###   ########.fr       */
+/*   Updated: 2025/07/25 11:44:09 by dvidal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,7 @@ int	cfinder(char **mapa, t_data *program)
 		{
 			if (mapa[y][x] != 'C' && mapa[y][x] != 'P' && mapa[y][x] != '1'
 				&& mapa[y][x] != '0' && mapa[y][x] != 'E')
-				return (ft_printf("ERROR:\nUnknown character,\
-						check your map!!"), 1);
+				return (write(2, "ERROR:\nUnknown character!\n", 27), 1);
 			x++;
 		}
 		y++;

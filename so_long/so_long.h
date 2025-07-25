@@ -6,7 +6,7 @@
 /*   By: dvidal <dvidal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 14:39:01 by dvidal            #+#    #+#             */
-/*   Updated: 2025/07/22 14:35:10 by dvidal           ###   ########.fr       */
+/*   Updated: 2025/07/25 11:34:03 by dvidal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,4 +98,5 @@ int	mapcheck(char **mapa, t_data *program);
 void ft_init(t_data *program);
 int ft_windowsize(char **mapa, t_data *program);
 void ft_tilekeeper(int y, int x, t_data *program);
+void	norminetteisabitch(t_data *ret);
 # endif

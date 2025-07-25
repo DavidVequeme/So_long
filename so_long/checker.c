@@ -6,7 +6,7 @@
 /*   By: dvidal <dvidal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 12:23:29 by dvidal            #+#    #+#             */
-/*   Updated: 2025/07/22 14:25:03 by dvidal           ###   ########.fr       */
+/*   Updated: 2025/07/25 11:43:46 by dvidal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,17 @@ int	checkers(t_data *ret)
 		return (freemap(ret->map, ret), freemap(ret->mapcheck, ret), 1);
 	return (0);
 }
+
 int	dimensioncheck(char **mapa, t_data *program)
 {
-	int	y;
-	int	i;
+	int		y;
+	int		i;
 	size_t	lengthchecker;
 
 	y = 0;
 	i = 0;
 	if (mapa[y] == NULL)
-		return (ft_printf("ERROR:\nYour map is empty!\n"), 1);
+		return (write(2, "ERROR:\nYour map is empty!\n", 27), 1);
 	while (mapa[y] != NULL)
 		y++;
 	lengthchecker = ft_strlen(mapa[0]);
@@ -44,8 +45,7 @@ int	dimensioncheck(char **mapa, t_data *program)
 		if (lengthchecker != ft_strlen(mapa[i]))
 		{
 			program->xpm.height = y;
-			ft_printf("ERROR:\nYour map is invalid,\
-				please be sure that the map is even\n");
+			write(2, "ERROR:\nYour map isn't even!\n", 29);
 			return (1);
 		}
 		i++;
@@ -54,6 +54,7 @@ int	dimensioncheck(char **mapa, t_data *program)
 	program->xpm.length = lengthchecker;
 	return (0);
 }
+
 int	mapcheck(char **mapa, t_data *program)
 {
 	int	x;
@@ -79,9 +80,10 @@ int	mapcheck(char **mapa, t_data *program)
 		y++;
 	}
 	if (program->xpm.pck != 1 || program->xpm.eck != 1 || program->xpm.cck != 1)
-		return (ft_printf("ERROR:\nInvalid Map\nReason: special tiles\n"), 1);
+		return (write(2, "ERROR:\nInvalid Map\nReason: Special tile\n", 41), 1);
 	return (0);
 }
+
 int	floodfillcheck(char **mapa, t_data *program)
 {
 	int	y;
@@ -112,14 +114,6 @@ int	colisioncheck(int x, int y, char key, t_data *program)
 		return (1);
 	else if (key == 'D' && program->map[y][x - 1] == '1')
 		return (1);
-	// else if ((key == 'W' && program->map[y - 1][x] == 'E') && program->xpm.cc != 0)
-	// 	return (1);
-	// else if ((key == 'S' && program->map[y + 1][x] == 'E') && program->xpm.cc != 0)
-	// 	return (1);
-	// else if ((key == 'A' && program->map[y][x + 1] == 'E') && program->xpm.cc != 0)
-	// 	return (1);
-	// else if ((key == 'D' && program->map[y][x - 1] == 'E') && program->xpm.cc != 0)
-		//return (1);
 	exitconfirm(program->map, key, program->xpm.cc, program);
 	return (0);
 }
